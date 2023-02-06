@@ -1,0 +1,20 @@
+{
+  "name": "@wafflestudio/truffle-browser",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn build -- --watch",
+    "build": "tsup src/index.ts --format cjs --dts"
+  },
+  "dependencies": {
+    "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "tsup": "6.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
