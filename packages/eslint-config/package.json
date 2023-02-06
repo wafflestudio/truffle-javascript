@@ -2,15 +2,10 @@
   "name": "eslint-config",
   "version": "0.0.0",
   "main": "index.js",
+  "private": true,
   "license": "MIT",
   "dependencies": {
     "eslint": "8.33.0",
     "eslint-config-prettier": "8.6.0"
-  },
-  "devDependencies": {
-    "typescript": "4.9.5"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
