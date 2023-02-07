@@ -1,3 +1,5 @@
+import ErrorStackParser from "error-stack-parser";
+
 export interface TruffleClient {
   capture(message: Error): void;
 }
@@ -30,15 +32,15 @@ export const getTruffleClient = ({
 
         const message = error.message;
         const description = window.location.href;
-        const elements = [
-          {
-            className: error.stack ?? "",
-            methodName: "",
-            lineNumber: 0,
-            fileName: "",
-            isInAppInClude: true,
-          },
-        ];
+        const fallbackString = "__fail__";
+        const fallbackNumber = 99999;
+        const elements = ErrorStackParser.parse(error).map((e) => ({
+          className: "",
+          methodName: e.functionName ?? fallbackString,
+          lineNumber: e.lineNumber ?? fallbackNumber,
+          fileName: e.fileName ?? fallbackString,
+          isInAppInClude: e.isNative ?? true,
+        }));
 
         const body = {
           version: "v1",
