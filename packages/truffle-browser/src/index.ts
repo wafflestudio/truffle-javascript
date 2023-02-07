@@ -1,4 +1,5 @@
 import ErrorStackParser from "error-stack-parser";
+import { postEvent } from "./postEvent";
 
 export interface TruffleClient {
   capture(message: Error): void;
@@ -10,7 +11,6 @@ export interface TruffleConfig {
   apiKey: string;
 }
 
-const baseUrl = "https://truffle-api.wafflestudio.com";
 const runtime = { name: "browser", version: "" };
 
 export const getTruffleClient = ({
@@ -18,13 +18,6 @@ export const getTruffleClient = ({
   app,
   apiKey,
 }: TruffleConfig): TruffleClient => {
-  const send = (body: unknown) =>
-    fetch(`${baseUrl}/events`, {
-      method: "POST",
-      headers: { "x-api-key": apiKey, "content-type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
   return {
     capture: (error: Error) => {
       try {
@@ -32,39 +25,40 @@ export const getTruffleClient = ({
 
         const message = error.message;
         const description = window.location.href;
-        const fallbackString = "__fail__";
         const fallbackNumber = 99999;
         const elements = ErrorStackParser.parse(error).map((e) => ({
           className: "",
-          methodName: e.functionName ?? fallbackString,
+          methodName: e.functionName ?? "",
           lineNumber: e.lineNumber ?? fallbackNumber,
-          fileName: e.fileName ?? fallbackString,
+          fileName: e.fileName ?? "",
           isInAppInClude: e.isNative ?? true,
         }));
 
         const body = {
-          version: "v1",
           app,
-          runtime,
           description,
           exception: { className: error.name, message, elements },
+          runtime,
+          version: "v1",
         };
 
-        send(body);
+        postEvent(apiKey, body);
       } catch (err) {
-        send(
-          JSON.stringify({
-            version: "v1",
-            app,
-            runtime,
-            description: "",
-            exception: {
-              className: "sdk error",
-              message: "sdk error",
-              elements: [],
-            },
-          })
-        );
+        const body = {
+          app,
+          description:
+            err && typeof err === "object"
+              ? (err as { message?: string }).message
+              : "",
+          exception: {
+            className: "sdk error",
+            message: "sdk error",
+            elements: [],
+          },
+          runtime,
+          version: "v1",
+        };
+        postEvent(apiKey, body);
       }
     },
   };
