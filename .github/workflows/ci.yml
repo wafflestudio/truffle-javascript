@@ -13,21 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          fetch-depth: 2
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+          bun-version: 1.2.2
 
       - name: Install dependencies
-        run: yarn
+        run: bun i
 
       - name: Build
-        run: yarn build
+        run: bun run build
 
       - name: Lint & Format
-        run: yarn run check
+        run: bun check

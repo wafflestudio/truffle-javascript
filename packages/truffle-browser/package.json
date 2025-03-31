@@ -5,7 +5,7 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn build -- --watch",
+    "dev": "bun run build -- --watch",
     "build": "tsup src/index.ts --format cjs --dts"
   },
   "files": ["dist/index.js", "dist/index.d.ts"],
