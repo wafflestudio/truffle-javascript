@@ -3,7 +3,6 @@
 .env.local
 .env.production.local
 .env.test.local
-.turbo
 coverage
 dist
 node_modules
