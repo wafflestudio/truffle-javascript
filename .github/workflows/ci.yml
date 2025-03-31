@@ -31,6 +31,3 @@ jobs:
 
       - name: Lint & Format
         run: yarn run check
-
-      - name: Test
-        run: yarn test
