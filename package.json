@@ -2,14 +2,13 @@
   "name": "truffle-javascript",
   "version": "0.0.0",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": ["packages/*"],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "test": "turbo run test",
     "check": "biome check .",
     "fix": "biome check . --fix",
-    "deploy:truffle-webclient": "scripts/deploy.sh truffle-webclient",
     "publish-packages": "turbo run build lint test && changeset version && changeset publish"
   },
   "devDependencies": {
