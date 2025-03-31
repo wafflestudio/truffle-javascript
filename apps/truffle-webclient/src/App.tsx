@@ -1,7 +1,7 @@
-import { createGlobalStyle } from "styled-components";
-import { LoginPage } from "./pages/LoginPage";
+import { createGlobalStyle } from 'styled-components';
+import { LoginPage } from './pages/LoginPage';
 
-function App() {
+export function App() {
   return (
     <>
       <GlobalStyle />
@@ -9,8 +9,6 @@ function App() {
     </>
   );
 }
-
-export default App;
 
 const GlobalStyle = createGlobalStyle`
   body {

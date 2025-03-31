@@ -1,5 +1,5 @@
-import ErrorStackParser from "error-stack-parser";
-import { postEvent } from "./postEvent";
+import ErrorStackParser from 'error-stack-parser';
+import { postEvent } from './postEvent';
 
 export interface TruffleClient {
   capture(message: Error): void;
@@ -11,13 +11,9 @@ export interface TruffleConfig {
   apiKey: string;
 }
 
-const runtime = { name: "browser", version: "" };
+const runtime = { name: 'browser', version: '' };
 
-export const getTruffleClient = ({
-  enabled = true,
-  app,
-  apiKey,
-}: TruffleConfig): TruffleClient => {
+export const getTruffleClient = ({ enabled = true, app, apiKey }: TruffleConfig): TruffleClient => {
   return {
     capture: (error: Error) => {
       try {
@@ -27,10 +23,10 @@ export const getTruffleClient = ({
         const description = window.location.href;
         const fallbackNumber = 99999;
         const elements = ErrorStackParser.parse(error).map((e) => ({
-          className: "",
-          methodName: e.functionName ?? "",
+          className: '',
+          methodName: e.functionName ?? '',
           lineNumber: e.lineNumber ?? fallbackNumber,
-          fileName: e.fileName ?? "",
+          fileName: e.fileName ?? '',
           isInAppInClude: e.isNative ?? true,
         }));
 
@@ -39,24 +35,21 @@ export const getTruffleClient = ({
           description,
           exception: { className: error.name, message, elements },
           runtime,
-          version: "v1",
+          version: 'v1',
         };
 
         postEvent(apiKey, body);
       } catch (err) {
         const body = {
           app,
-          description:
-            err && typeof err === "object"
-              ? (err as { message?: string }).message
-              : "",
+          description: err && typeof err === 'object' ? (err as { message?: string }).message : '',
           exception: {
-            className: "sdk error",
-            message: "sdk error",
+            className: 'sdk error',
+            message: 'sdk error',
             elements: [],
           },
           runtime,
-          version: "v1",
+          version: 'v1',
         };
         postEvent(apiKey, body);
       }
