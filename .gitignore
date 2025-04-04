@@ -3,6 +3,7 @@
 .env.local
 .env.production.local
 .env.test.local
+.npmrc
 coverage
 dist
 node_modules
