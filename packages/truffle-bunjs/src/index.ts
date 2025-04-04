@@ -20,7 +20,6 @@ export const getTruffleClient = ({ enabled = true, app, apiKey }: TruffleConfig)
         if (!enabled) return;
 
         const message = error.message;
-        const description = window.location.href;
         const fallbackNumber = 99999;
         const elements = ErrorStackParser.parse(error).map((e) => ({
           className: '',
@@ -32,7 +31,7 @@ export const getTruffleClient = ({ enabled = true, app, apiKey }: TruffleConfig)
 
         const body = {
           app,
-          description,
+          description: '',
           exception: { className: error.name, message, elements },
           runtime,
           version: 'v1',
