@@ -21,7 +21,7 @@
     },
     "packages/truffle-bunjs": {
       "name": "@wafflestudio/truffle-bunjs",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "dependencies": {
         "error-stack-parser": "^2.1.4",
       },
@@ -30,7 +30,7 @@
         "typescript": "5.8.2",
       },
       "peerDependencies": {
-        "@types/bun": "^1.2.0",
+        "@types/bun": "*",
       },
     },
   },
